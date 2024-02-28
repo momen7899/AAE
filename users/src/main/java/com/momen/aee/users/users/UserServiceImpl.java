@@ -22,9 +22,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public User update(User user) {
         User savedBefore = findById(user.getId());
-        savedBefore.setName(user.getName());
-        savedBefore.setUserName(user.getUserName());
-        savedBefore.setPhoneNUmber(user.getPhoneNUmber());
+        if (user.getName() != null) savedBefore.setName(user.getName());
+        if (user.getUserName() != null)   savedBefore.setUserName(user.getUserName());
+        if (user.getPhoneNUmber() != null)    savedBefore.setPhoneNUmber(user.getPhoneNUmber());
         return repository.save(savedBefore);
     }
 
@@ -46,5 +46,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> findAll() {
         return (List<User>) repository.findAll();
+    }
+
+    @Override
+    public Boolean signIn(String username, String password) {
+        Optional<User> user = repository.findByUserNameAndPassword(username, password);
+        return user.isPresent();
     }
 }
