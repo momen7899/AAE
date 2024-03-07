@@ -1,4 +1,4 @@
-package com.momen.aee.users.users;
+package com.momen.aee.users.user;
 
 
 import jakarta.persistence.*;

@@ -1,4 +1,4 @@
-package com.momen.aee.users.users;
+package com.momen.aee.users.user;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
