@@ -1,5 +1,6 @@
 package com.momen.aee.orders.order;
 
+import com.momen.aee.orders.order_item.OrderItemService;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
@@ -13,11 +14,15 @@ import java.util.Optional;
 public class OrderServiceImpl implements OrderService {
 
     private final OrderRepository repository;
+    private final OrderItemService orderItemService;
 
     @Override
     public Order save(Order order) {
         // TODO: VALIDATE USER
-        return repository.save(order);
+        order.setUser(1L);
+        Order savedOrder = repository.save(order);
+        orderItemService.saveOrderItems(order.getOrderItems(), order);
+        return savedOrder;
     }
 
     @Override

@@ -11,10 +11,11 @@ import java.util.List;
 public class OrderController {
 
     private final OrderService service;
+    private final OrderMapper mapper;
 
     @PostMapping()
-    Order save(@RequestBody Order order) {
-        return service.save(order);
+    OrderResponseDTO save(@RequestBody OrderRequestDTO order) {
+        return mapper.toResponse(service.save(mapper.toOrder(order)));
     }
 
 
@@ -24,14 +25,14 @@ public class OrderController {
     }
 
     @GetMapping("{id}/")
-    void findById(@PathVariable Long id) {
-        service.findById(id);
+    OrderResponseDTO findById(@PathVariable Long id) {
+        return mapper.toResponse(service.findById(id));
     }
 
 
     @GetMapping()
-    List<Order> all() {
-        return service.findAll();
+    List<OrderResponseDTO> all() {
+        return mapper.toResponses(service.findAll());
     }
 
 }

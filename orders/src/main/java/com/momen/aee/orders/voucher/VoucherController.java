@@ -10,10 +10,11 @@ import org.springframework.web.bind.annotation.*;
 public class VoucherController {
 
     private final VoucherService service;
+    private final VoucherMapper mapper;
 
     @PostMapping()
-    Voucher save(@RequestBody Voucher voucher) {
-        return service.save(voucher);
+    public VoucherResponseDTO save(@RequestBody VoucherRequestDTO voucher) {
+        return mapper.toVoucherResponse(service.save(mapper.toVoucher(voucher)));
     }
 
 
@@ -23,8 +24,8 @@ public class VoucherController {
     }
 
     @GetMapping("{id}/")
-    void findById(@PathVariable Long id) {
-        service.findById(id);
+    VoucherResponseDTO findById(@PathVariable Long id) {
+        return mapper.toVoucherResponse(service.findById(id));
     }
 
 }

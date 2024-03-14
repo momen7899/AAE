@@ -11,15 +11,8 @@ public class OrderItemsController {
 
     private final OrderItemService service;
 
-    @PostMapping()
-    OrderItem save(@RequestBody OrderItem orderItems) {
-        return service.save(orderItems);
-    }
-
-
     @DeleteMapping("{id}/")
     void delete(@PathVariable Long id) {
         service.delete(id);
     }
-
 }

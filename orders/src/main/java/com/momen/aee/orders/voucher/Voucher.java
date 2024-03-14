@@ -14,7 +14,7 @@ public class Voucher extends BaseEntity {
 
 
     @Column(name = "code", unique = true, nullable = false, updatable = false)
-    private String code = "";
+    private String code;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "order_id")

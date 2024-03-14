@@ -1,9 +1,11 @@
 package com.momen.aee.orders.order_item;
 
+import com.momen.aee.orders.order.Order;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -15,6 +17,14 @@ public class OrderItemServiceImpl implements OrderItemService {
     @Override
     public OrderItem save(OrderItem orderItem) {
         return repository.save(orderItem);
+    }
+
+    @Override
+    public void saveOrderItems(List<OrderItem> orderItems, Order order) {
+        for (OrderItem item : orderItems) {
+            item.setOrder(order);
+        }
+        repository.saveAll(orderItems);
     }
 
     @Override
