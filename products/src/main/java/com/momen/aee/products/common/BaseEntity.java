@@ -9,7 +9,7 @@ import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @MappedSuperclass
 @EntityListeners({AuditingEntityListener.class})
@@ -24,15 +24,39 @@ public class BaseEntity {
 
     @CreatedDate
     @Temporal(TemporalType.TIMESTAMP)
-    private Date createdDate;
+    private LocalDateTime createdDate;
 
     @CreatedBy
     private String createdBy;
 
     @LastModifiedDate
     @Temporal(TemporalType.TIMESTAMP)
-    private Date lastModifiedDate;
+    private LocalDateTime lastModifiedDate;
 
     @LastModifiedBy
     private String lastModifiedBy;
+
+    @Column(name = "DeletedOn")
+    private LocalDateTime deletedOn;
+
+    @Column(name = "DeletedBy", length = 50)
+    private String deletedBy;
+
+    @Column(name = "isDeleted", length = 50)
+    private Boolean isDeleted = false;
+
+    @PreUpdate
+    @PrePersist
+    public void beforeAnyUpdate() {
+        if (isDeleted != null && isDeleted) {
+
+            if (deletedBy == null) {
+//                deletedBy = SignedUserHelper.userId().toString();
+            }
+
+            if (getDeletedOn() == null) {
+                deletedOn = LocalDateTime.now();
+            }
+        }
+    }
 }
