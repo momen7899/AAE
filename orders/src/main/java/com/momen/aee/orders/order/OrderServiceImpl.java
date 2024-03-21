@@ -1,5 +1,6 @@
 package com.momen.aee.orders.order;
 
+import com.momen.aee.orders.common.errors.NotFoundException;
 import com.momen.aee.orders.order_item.OrderItemService;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
@@ -35,7 +36,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Order findById(long id) {
         Optional<Order> optionalOrder = repository.findById(id);
-        return optionalOrder.orElseThrow(() -> new Exception("Order with id not found"));
+        return optionalOrder.orElseThrow(() -> new NotFoundException(Order.class.getName(), id));
     }
 
     @Override
